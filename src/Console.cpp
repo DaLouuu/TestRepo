@@ -1,4 +1,8 @@
+#if __has_include("../include/Console.h")
+#include "../include/Console.h"
+#else
 #include "Console.h"
+#endif
 #include <iostream>
 #include <ctime>
 #include <iomanip>

@@ -26,9 +26,9 @@
 
 ---
 
-## 📂 Recommended Project Folder Hierarchy
+## 📂 Project Folder Hierarchy
 
-As the project scales into a full operating system emulator with multi-core CPU scheduling (FCFS, Round-Robin), memory management, and file operations, the following modular directory layout is recommended:
+The project is structured according to standard C++ software engineering conventions:
 
 ```text
 OSConsoleCLI-CSOPESY/
@@ -36,18 +36,11 @@ OSConsoleCLI-CSOPESY/
 ├── build/                      # Intermediate compilation object files (.o/.obj)
 ├── config/                     # Configuration and parameter files
 │   └── params.txt              # Quantum, core count, scheduler type definitions
-├── docs/                       # Architectural diagrams and course report specs
-│   └── architecture.md
 ├── include/                    # C++ Header files (.h / .hpp)
-│   ├── Console.h               # Process console & screen session declarations
-│   ├── Process.h               # Process Control Block (PCB) definitions
-│   ├── Scheduler.h             # CPU Scheduler abstraction and algorithm interfaces
-│   └── Config.h                # Parameter parser interface
+│   └── Console.h               # Process console & screen session declarations
 ├── src/                        # C++ Implementation source files (.cpp)
 │   ├── main.cpp                # Main CLI loop and command interpreter
-│   ├── Console.cpp             # Screen session display & timestamping logic
-│   ├── Process.cpp             # Process lifecycle execution simulation
-│   └── Scheduler.cpp           # Scheduling implementations (FCFS, RR)
+│   └── Console.cpp             # Screen session display & timestamping logic
 ├── .gitignore                  # Git ignore rules for build artifacts and binaries
 ├── Makefile                    # Automated build script
 └── README.md                   # Project documentation
@@ -59,22 +52,35 @@ OSConsoleCLI-CSOPESY/
 
 ### Prerequisites
 - GCC / G++ (MinGW on Windows, or default G++ on Linux/macOS) with C++17 support.
+- Make (optional, for automated builds).
 
 ### Compilation
-Compile all source files from the project root:
 
+#### Option 1: Direct g++ Command
+From the project root directory:
+
+- **Windows**:
+  ```powershell
+  g++ -Wall -Wextra -std=c++17 -Iinclude src/main.cpp src/Console.cpp -o bin/main.exe
+  ```
+- **Linux / macOS**:
+  ```bash
+  g++ -Wall -Wextra -std=c++17 -Iinclude src/main.cpp src/Console.cpp -o bin/main
+  ```
+
+#### Option 2: Using Makefile
 ```bash
-g++ -Wall -Wextra -std=c++17 main.cpp Console.cpp -o main
+make
 ```
 
 ### Running the Executable
 - **Windows**:
   ```powershell
-  .\main.exe
+  .\bin\main.exe
   ```
 - **Linux / macOS**:
   ```bash
-  ./main
+  ./bin/main
   ```
 
 ---
@@ -98,7 +104,7 @@ g++ -Wall -Wextra -std=c++17 main.cpp Console.cpp -o main
 
 ## 🛠️ Code Structure
 
-- **[`Console.h`](file:///c:/Users/asus/OneDrive/Desktop/TestRepo/Console.h) / [`Console.cpp`](file:///c:/Users/asus/OneDrive/Desktop/TestRepo/Console.cpp)**:  
+- **[`include/Console.h`](file:///c:/Users/asus/OneDrive/Desktop/TestRepo/include/Console.h) / [`src/Console.cpp`](file:///c:/Users/asus/OneDrive/Desktop/TestRepo/src/Console.cpp)**:  
   Defines the `Console` class representing a screen session/process instance with state variables:
   - `name`: Identifier of the screen session.
   - `currentLine`: Executed instruction index.
@@ -106,5 +112,8 @@ g++ -Wall -Wextra -std=c++17 main.cpp Console.cpp -o main
   - `timestamp`: Formatted launch timestamp (`MM/DD/YYYY, hh:mm:ss AM/PM`).
   - `display()`: Clears the terminal and renders the session dashboard.
 
-- **[`main.cpp`](file:///c:/Users/asus/OneDrive/Desktop/TestRepo/main.cpp)**:  
+- **[`src/main.cpp`](file:///c:/Users/asus/OneDrive/Desktop/TestRepo/src/main.cpp)**:  
   The command-line interpreter driver managing the command dispatch loop, input sanitization, global session map (`std::map<std::string, Console>`), and active session context switches.
+
+- **[`config/params.txt`](file:///c:/Users/asus/OneDrive/Desktop/TestRepo/config/params.txt)**:  
+  Default configuration specifications defining core parameters like CPU count and scheduling algorithm.

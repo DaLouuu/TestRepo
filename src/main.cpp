@@ -5,7 +5,11 @@
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#if __has_include("../include/Console.h")
+#include "../include/Console.h"
+#else
 #include "Console.h"
+#endif
 
 using namespace std;
 
