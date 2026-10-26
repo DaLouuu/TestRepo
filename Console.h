@@ -15,6 +15,7 @@ public:
 
     static std::string getCurrentTimestamp();
 
+    void display() const;
     void display(int totalLine) const;
 };
 
